@@ -1,1 +1,74 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Mälestusteenistus</title>
+
+    <!-- Leaflet CSS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Mälestusteenistus</h1>
+        <p class="subtitle">Teekond krematooriumist peielauani</p>
+    </header>
+
+    <main>
+
+        <section class="intro">
+            <h2>Mälestuseks</h2>
+
+            <p>
+                Siin on informatsioon mälestusteenistuse ning sellele järgneva
+                peielaua kohta.
+            </p>
+        </section>
+
+        <section class="route-section">
+
+            <h2>Teekond</h2>
+
+            <p>
+                Kaardil on näidatud teekond krematooriumist peielaua
+                toimumiskohta.
+            </p>
+
+            <div id="map"></div>
+
+        </section>
+
+        <section class="locations">
+
+            <h2>Kohad</h2>
+
+            <div id="location-list">
+                <!-- Google Sheetsi andmed tulevad siia JavaScriptiga -->
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Mälestusega</p>
+    </footer>
+
+
+    <!-- Leaflet JavaScript -->
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
