@@ -29,7 +29,6 @@ fetch(SHEET_URL)
         }));
 
         createMap(locations);
-        displayLocations(locations);
 
     })
     .catch(error => {
@@ -100,6 +99,14 @@ function createMap(locations) {
 
 
             const route = data.routes[0];
+            const distance = (route.distance / 1000).toFixed(1);
+            const duration = Math.round(route.duration / 60);
+
+            document.getElementById("route-info").innerHTML = `
+                <strong>${distance} km</strong>
+                <span>·</span>
+                <strong>umbes ${duration} minutit</strong>
+            `;
 
 
             // Draw the route on the map
@@ -134,27 +141,3 @@ function createMap(locations) {
 }
 
 
-// Display locations underneath the map
-function displayLocations(locations) {
-
-    const container = document.getElementById("location-list");
-
-    locations.forEach(location => {
-
-        const element = document.createElement("div");
-
-        element.className = "location";
-
-        element.innerHTML = `
-            <div class="location-name">
-                ${location.name}
-            </div>
-
-            <div class="coordinates">
-                ${location.latitude}, ${location.longitude}
-            </div>
-        `;
-
-        container.appendChild(element);
-    });
-}
