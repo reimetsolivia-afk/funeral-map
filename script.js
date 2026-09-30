@@ -1,11 +1,11 @@
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRv0Z4mjw09i8BmoNDAaEwX9oAu8cfZLLazsB_M8zxcbFEH-0vjA0CXeuU461VNADCWLexeJevqy_gY/pub?gid=0&single=true&output=csv";
 
 
-// Create the map
+// Create the map (Put the map inside the HTML element whose ID is map)
 const map = L.map("map");
 
 
-// Add OpenStreetMap tiles
+// Add OpenStreetMap tiles (code taken from leaflet website)
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -14,16 +14,16 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 // Read the Google Sheet
 fetch(SHEET_URL)
-    .then(response => response.text())
+    .then(response => response.text()) // turns it into text
     .then(csv => {
 
-        const rows = parseCSV(csv);
+        const rows = parseCSV(csv); // turns it into something Javascript can work with
 
         // Remove the header row
         const data = rows.slice(1);
 
         const locations = data.map(row => ({
-            latitude: parseFloat(row[0]),
+            latitude: parseFloat(row[0]), // turns csv text into numbers
             longitude: parseFloat(row[1]),
             name: row[2]
         }));
@@ -41,11 +41,11 @@ function parseCSV(csv) {
 
     return csv
         .trim()
-        .split("\n")
+        .split("\n") //splits the csv into rows
         .map(row => {
 
             return row
-                .split(",")
+                .split(",") //splits the csv from commas into columns
                 .map(value => value.trim());
         });
 }
@@ -98,10 +98,11 @@ function createMap(locations) {
             }
 
 
-            const route = data.routes[0];
-            const distance = (route.distance / 1000).toFixed(1);
-            const duration = Math.round(route.duration / 60);
+            const route = data.routes[0]; //takes the first route returned by osrm
+            const distance = (route.distance / 1000).toFixed(1); //kaugus (on m, jagatud 1000, et saada km)(üks koht pärast koma)
+            const duration = Math.round(route.duration / 60); //kestus (sek - min, rounds to nearest full minute)
 
+            //info kaardi alla (html)
             document.getElementById("route-info").innerHTML = `
                 <strong>${distance} km</strong>
                 <span>·</span>
@@ -110,7 +111,7 @@ function createMap(locations) {
 
 
             // Draw the route on the map
-            const routeLine = L.geoJSON(route.geometry, {
+            const routeLine = L.geoJSON(route.geometry, { //leaflet kasutab geoJSONit et see kaardile joonistada (route.ggeometry contains the shape of the route))
                 style: {
                     color: "#5c5960",
                     weight: 5,
